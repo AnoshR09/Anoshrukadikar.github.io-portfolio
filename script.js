@@ -25,7 +25,7 @@ navLinks.querySelectorAll('a').forEach(a =>
 );
 
 // Contact Form
-emailjs.init('<YOUR_PUBLIC_KEY>'); // Replace with your EmailJS Public Key
+emailjs.init('afYny0Yd9E_b_t6nJ'); // Replace with your EmailJS Public Key
 
 function notifyWhatsApp(name, email, subject, message) {
   const text = encodeURIComponent(`New Contact Form Submission!\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\nMessage: ${message}`);
