@@ -25,7 +25,7 @@ navLinks.querySelectorAll('a').forEach(a =>
 );
 
 // Contact Form
-emailjs.init('<YOUR_PUBLIC_KEY>');
+emailjs.init('<YOUR_PUBLIC_KEY>'); // Replace with your EmailJS Public Key
 
 function notifyWhatsApp(name, email, subject, message) {
   const text = encodeURIComponent(`New Contact Form Submission!\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\nMessage: ${message}`);
@@ -43,7 +43,7 @@ document.getElementById('contactForm').addEventListener('submit', (e) => {
   const subject = document.getElementById('subject').value;
   const message = document.getElementById('message').value;
 
-  emailjs.send('<YOUR_SERVICE_ID>', '<YOUR_TEMPLATE_ID>', {
+  emailjs.send('service_01vz8rt', 'template_kmj8xuf', { // Replace Service ID and Template ID
     from_name: name, from_email: email, subject, message,
   }).then(() => {
     notifyWhatsApp(name, email, subject, message);
