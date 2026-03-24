@@ -25,12 +25,7 @@ navLinks.querySelectorAll('a').forEach(a =>
 );
 
 // Contact Form
-emailjs.init('afYny0Yd9E_b_t6nJ'); // Replace with your EmailJS Public Key
-
-function notifyWhatsApp(name, email, subject, message) {
-  const text = encodeURIComponent(`New Contact Form Submission!\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\nMessage: ${message}`);
-  fetch(`https://api.callmebot.com/whatsapp.php?phone=918208678992&text=${text}&apikey=<YOUR_APIKEY>`);
-}
+emailjs.init('afYny0Yd9E_b_t6nJ');
 
 document.getElementById('contactForm').addEventListener('submit', (e) => {
   e.preventDefault();
@@ -38,15 +33,12 @@ document.getElementById('contactForm').addEventListener('submit', (e) => {
   btn.disabled = true;
   btn.textContent = 'Sending...';
 
-  const name = document.getElementById('name').value;
-  const email = document.getElementById('email').value;
-  const subject = document.getElementById('subject').value;
-  const message = document.getElementById('message').value;
-
-  emailjs.send('service_01vz8rt', 'template_kmj8xuf', { // Replace Service ID and Template ID
-    from_name: name, from_email: email, subject, message,
+  emailjs.send('service_01vz8rt', 'template_kmj8xuf', {
+    from_name: document.getElementById('name').value,
+    from_email: document.getElementById('email').value,
+    subject: document.getElementById('subject').value,
+    message: document.getElementById('message').value,
   }).then(() => {
-    notifyWhatsApp(name, email, subject, message);
     document.getElementById('formSuccess').classList.add('show');
     e.target.reset();
     setTimeout(() => document.getElementById('formSuccess').classList.remove('show'), 4000);
