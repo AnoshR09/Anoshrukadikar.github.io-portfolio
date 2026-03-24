@@ -25,11 +25,37 @@ navLinks.querySelectorAll('a').forEach(a =>
 );
 
 // Contact Form
+emailjs.init('<YOUR_PUBLIC_KEY>');
+
+function notifyWhatsApp(name, email, subject, message) {
+  const text = encodeURIComponent(`New Contact Form Submission!\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\nMessage: ${message}`);
+  fetch(`https://api.callmebot.com/whatsapp.php?phone=918208678992&text=${text}&apikey=<YOUR_APIKEY>`);
+}
+
 document.getElementById('contactForm').addEventListener('submit', (e) => {
   e.preventDefault();
-  document.getElementById('formSuccess').classList.add('show');
-  e.target.reset();
-  setTimeout(() => document.getElementById('formSuccess').classList.remove('show'), 4000);
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const subject = document.getElementById('subject').value;
+  const message = document.getElementById('message').value;
+
+  emailjs.send('<YOUR_SERVICE_ID>', '<YOUR_TEMPLATE_ID>', {
+    from_name: name, from_email: email, subject, message,
+  }).then(() => {
+    notifyWhatsApp(name, email, subject, message);
+    document.getElementById('formSuccess').classList.add('show');
+    e.target.reset();
+    setTimeout(() => document.getElementById('formSuccess').classList.remove('show'), 4000);
+  }).catch(() => {
+    alert('Failed to send message. Please try again.');
+  }).finally(() => {
+    btn.disabled = false;
+    btn.innerHTML = 'Send Message <i class="fa-solid fa-paper-plane"></i>';
+  });
 });
 
 // Active nav link on scroll
