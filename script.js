@@ -25,28 +25,30 @@ navLinks.querySelectorAll('a').forEach(a =>
 );
 
 // Contact Form
-emailjs.init('afYny0Yd9E_b_t6nJ');
+document.addEventListener('DOMContentLoaded', () => {
+  emailjs.init('afYny0Yd9E_b_t6nJ');
 
-document.getElementById('contactForm').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const btn = e.target.querySelector('button[type="submit"]');
-  btn.disabled = true;
-  btn.textContent = 'Sending...';
+  document.getElementById('contactForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
 
-  emailjs.send('service_01vz8rt', 'template_kmj8xuf', {
-    from_name: document.getElementById('name').value,
-    from_email: document.getElementById('email').value,
-    subject: document.getElementById('subject').value,
-    message: document.getElementById('message').value,
-  }).then(() => {
-    document.getElementById('formSuccess').classList.add('show');
-    e.target.reset();
-    setTimeout(() => document.getElementById('formSuccess').classList.remove('show'), 4000);
-  }).catch(() => {
-    alert('Failed to send message. Please try again.');
-  }).finally(() => {
-    btn.disabled = false;
-    btn.innerHTML = 'Send Message <i class="fa-solid fa-paper-plane"></i>';
+    emailjs.send('service_01vz8rt', 'template_kmj8xuf', {
+      from_name: document.getElementById('name').value,
+      from_email: document.getElementById('email').value,
+      subject: document.getElementById('subject').value,
+      message: document.getElementById('message').value,
+    }).then(() => {
+      document.getElementById('formSuccess').classList.add('show');
+      e.target.reset();
+      setTimeout(() => document.getElementById('formSuccess').classList.remove('show'), 4000);
+    }).catch(() => {
+      alert('Failed to send message. Please try again.');
+    }).finally(() => {
+      btn.disabled = false;
+      btn.innerHTML = 'Send Message <i class="fa-solid fa-paper-plane"></i>';
+    });
   });
 });
 
